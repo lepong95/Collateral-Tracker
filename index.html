@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>活動宣傳物料追蹤工具 (可編輯版)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="stylesheet" href="style.css">
+    
+</head>
+<body class="text-slate-800">
+
+    <div class="container mx-auto max-w-7xl p-4 sm:p-6 lg:p-8">
+        <header class="mb-6">
+            <h1 class="text-3xl font-bold text-slate-900">活動宣傳物料追蹤工具</h1>
+            <p class="text-slate-600 mt-1">統一管理所有設計、文案及製作進度。點擊欄位即可快速編輯。</p>
+        </header>
+
+        <div class="bg-white p-4 rounded-lg shadow-md mb-6 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center gap-4">
+                <button id="add-item-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors">＋ 新增項目</button>
+            </div>
+            <div class="flex flex-wrap items-center gap-4">
+                <div>
+                    <label for="filter-status" class="text-sm font-medium mr-2">篩選狀態:</label>
+                    <select id="filter-status" class="filter-select">
+                        <option value="all">全部</option>
+                        <option value="待辦">待辦</option>
+                        <option value="內容準備中">內容準備中</option>
+                        <option value="設計中">設計中</option>
+                        <option value="待審批">待審批</option>
+                        <option value="待製作">待製作</option>
+                        <option value="已完成">已完成</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="filter-owner" class="text-sm font-medium mr-2">篩選負責人:</label>
+                    <select id="filter-owner" class="filter-select">
+                        <option value="all">全部</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div id="collateral-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Collateral cards will be rendered here by JS -->
+        </div>
+    </div>
+
+    <!-- Modal for adding new items -->
+    <div id="item-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h3 id="modal-title" class="text-xl font-bold mb-4">新增項目</h3>
+            <form id="item-form" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">文件名稱</label>
+                    <input type="text" id="item-name" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">用途 / 應用場景</label>
+                    <input type="text" id="item-application" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">負責人</label>
+                    <input type="text" id="item-owner" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">到期日</label>
+                    <input type="date" id="item-due-date" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500" required>
+                </div>
+                <div class="flex justify-end gap-2">
+                    <button type="button" id="cancel-btn" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-lg">取消</button>
+                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg">儲存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal for history log -->
+    <div id="history-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h3 class="text-xl font-bold mb-4">更新紀錄</h3>
+            <div id="history-log" class="space-y-2 mb-4 max-h-48 overflow-y-auto pr-2 bg-slate-50 p-2 rounded"></div>
+            <form id="history-form" class="space-y-2">
+                <input type="hidden" id="history-item-id">
+                <label class="block text-sm font-medium text-gray-700">新增紀錄 (輸入 V1.1 等可自動更新版本號)</label>
+                <textarea id="history-note" rows="3" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="例如：V1.1 - 根據主席意見修改。"></textarea>
+                <div class="flex justify-end gap-2">
+                    <button type="button" id="close-history-btn" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-lg">關閉</button>
+                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg">加入紀錄</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
